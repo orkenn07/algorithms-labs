@@ -1,0 +1,497 @@
+#1. Implement a Stack
+class Stack:
+    def __init__(self):
+        self.items = []
+
+    def push(self, value):
+        self.items.append(value)
+
+    def pop(self):
+        if self.isEmpty():
+            print("Stack is empty")
+            return None
+        return self.items.pop()
+
+    def peek(self):
+        if self.isEmpty():
+            return None
+        return self.items[-1]
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+    def size(self):
+        return len(self.items)
+
+
+stack = Stack()
+
+for i in range(1, 11):
+    stack.push(i)
+
+print("Stack:", stack.items)
+print("Size:", stack.size())
+print("Top:", stack.peek())
+print("Pop:", stack.pop())
+print("After pop:", stack.items)
+print("Is empty:", stack.isEmpty())
+
+#2. Reverse a String Using a Stack
+def reverseString(text):
+    stack = []
+
+    for char in text:
+        stack.append(char)
+
+    result = ""
+
+    while len(stack) > 0:
+        result += stack.pop()
+
+    return result
+
+
+text = "HELLO"
+print("Input:", text)
+print("Output:", reverseString(text))
+
+#3. Check Balanced Parentheses
+def isBalanced(expression):
+    stack = []
+    pairs = {
+        ")": "(",
+        "]": "[",
+        "}": "{"
+    }
+
+    for char in expression:
+        if char in "([{":
+            stack.append(char)
+
+        elif char in ")]}":
+            if len(stack) == 0:
+                return False
+
+            if stack.pop() != pairs[char]:
+                return False
+
+    return len(stack) == 0
+
+
+print(isBalanced("{[()]}"))
+print(isBalanced("{[(])}"))
+
+#4. Remove Adjacent Duplicates
+def removeDuplicates(text):
+    stack = []
+
+    for char in text:
+        if len(stack) > 0 and stack[-1] == char:
+            stack.pop()
+        else:
+            stack.append(char)
+
+    return "".join(stack)
+
+
+text = "abbaca"
+print("Input:", text)
+print("Output:", removeDuplicates(text))
+
+#5. Stack-Based Number Conversion
+def decimalToBinary(number):
+    if number == 0:
+        return "0"
+
+    stack = []
+
+    while number > 0:
+        remainder = number % 2
+        stack.append(remainder)
+        number = number // 2
+
+    binary = ""
+
+    while len(stack) > 0:
+        binary += str(stack.pop())
+
+    return binary
+
+
+number = 25
+print("Input:", number)
+print("Output:", decimalToBinary(number))
+
+#6. Implement a Queue
+class Queue:
+    def __init__(self):
+        self.items = []
+
+    def enqueue(self, value):
+        self.items.append(value)
+
+    def dequeue(self):
+        if self.isEmpty():
+            print("Queue is empty")
+            return None
+        return self.items.pop(0)
+
+    def front(self):
+        if self.isEmpty():
+            return None
+        return self.items[0]
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+    def size(self):
+        return len(self.items)
+
+
+queue = Queue()
+
+for i in range(1, 11):
+    queue.enqueue(i)
+
+print("Queue:", queue.items)
+print("Size:", queue.size())
+print("Front:", queue.front())
+print("Dequeue:", queue.dequeue())
+print("After dequeue:", queue.items)
+print("Is empty:", queue.isEmpty())
+
+#7. Reverse a Queue
+from collections import deque
+
+
+def reverseQueue(queue):
+    stack = []
+
+    while queue:
+        stack.append(queue.popleft())
+
+    while stack:
+        queue.append(stack.pop())
+
+
+queue = deque([10, 20, 30, 40, 50])
+
+print("Before:", list(queue))
+
+reverseQueue(queue)
+
+print("After:", list(queue))
+
+#8. Generate Binary Numbers Using a Queue
+from collections import deque
+
+
+def generateBinary(n):
+    queue = deque(["1"])
+
+    for i in range(n):
+        current = queue.popleft()
+        print(current)
+
+        queue.append(current + "0")
+        queue.append(current + "1")
+
+
+n = 5
+generateBinary(n)
+
+#9. Evaluate a Postfix Expression
+def evaluatePostfix(expression):
+    stack = []
+
+    for token in expression.split():
+        if token not in ["+", "-", "*", "/"]:
+            stack.append(float(token))
+        else:
+            b = stack.pop()
+            a = stack.pop()
+
+            if token == "+":
+                stack.append(a + b)
+            elif token == "-":
+                stack.append(a - b)
+            elif token == "*":
+                stack.append(a * b)
+            elif token == "/":
+                stack.append(a / b)
+
+    result = stack.pop()
+
+    if result.is_integer():
+        return int(result)
+
+    return result
+
+
+expression = "5 3 + 2 *"
+print("Result:", evaluatePostfix(expression))
+
+#10. Infix to Postfix Conversion
+def infixToPostfix(expression):
+    stack = []
+    output = []
+
+    priority = {
+        "+": 1,
+        "-": 1,
+        "*": 2,
+        "/": 2
+    }
+
+    tokens = expression.replace("(", " ( ").replace(")", " ) ").split()
+
+    for token in tokens:
+        if token.isalnum():
+            output.append(token)
+
+        elif token == "(":
+            stack.append(token)
+
+        elif token == ")":
+            while stack and stack[-1] != "(":
+                output.append(stack.pop())
+
+            if stack:
+                stack.pop()
+
+        else:
+            while (stack and stack[-1] != "("
+                   and priority[stack[-1]] >= priority[token]):
+                output.append(stack.pop())
+
+            stack.append(token)
+
+    while stack:
+        output.append(stack.pop())
+
+    return " ".join(output)
+
+
+expression = "A + B * C"
+print(infixToPostfix(expression))
+
+#11. Implement a Queue Using Two Stacks
+class QueueUsingStacks:
+    def __init__(self):
+        self.stack1 = []
+        self.stack2 = []
+
+    def enqueue(self, value):
+        self.stack1.append(value)
+
+    def dequeue(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+
+        if not self.stack2:
+            print("Queue is empty")
+            return None
+
+        return self.stack2.pop()
+
+    def peek(self):
+        if not self.stack2:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+
+        if not self.stack2:
+            return None
+
+        return self.stack2[-1]
+
+    def isEmpty(self):
+        return not self.stack1 and not self.stack2
+
+
+queue = QueueUsingStacks()
+
+queue.enqueue(10)
+queue.enqueue(20)
+queue.enqueue(30)
+
+print("Front:", queue.peek())
+print("Dequeue:", queue.dequeue())
+print("Dequeue:", queue.dequeue())
+
+queue.enqueue(40)
+
+print("Dequeue:", queue.dequeue())
+print("Dequeue:", queue.dequeue())
+print("Is empty:", queue.isEmpty())
+
+
+#12. Implement a Stack Using Two Queues
+from collections import deque
+
+
+class StackUsingQueues:
+    def __init__(self):
+        self.q1 = deque()
+        self.q2 = deque()
+
+    def push(self, value):
+        self.q2.append(value)
+
+        while self.q1:
+            self.q2.append(self.q1.popleft())
+
+        self.q1, self.q2 = self.q2, self.q1
+
+    def pop(self):
+        if self.isEmpty():
+            print("Stack is empty")
+            return None
+        return self.q1.popleft()
+
+    def peek(self):
+        if self.isEmpty():
+            return None
+        return self.q1[0]
+
+    def isEmpty(self):
+        return len(self.q1) == 0
+
+
+stack = StackUsingQueues()
+
+stack.push(10)
+stack.push(20)
+stack.push(30)
+
+print("Top:", stack.peek())
+print("Pop:", stack.pop())
+print("Pop:", stack.pop())
+print("Top:", stack.peek())
+print("Is empty:", stack.isEmpty())
+
+#13. Browser History Simulation
+class BrowserHistory:
+    def __init__(self, homepage):
+        self.current = homepage
+        self.backStack = []
+        self.forwardStack = []
+
+    def visit(self, page):
+        self.backStack.append(self.current)
+        self.current = page
+        self.forwardStack.clear()
+
+    def back(self):
+        if self.backStack:
+            self.forwardStack.append(self.current)
+            self.current = self.backStack.pop()
+        return self.current
+
+    def forward(self):
+        if self.forwardStack:
+            self.backStack.append(self.current)
+            self.current = self.forwardStack.pop()
+        return self.current
+
+    def currentPage(self):
+        return self.current
+
+
+browser = BrowserHistory("Home")
+
+browser.visit("Google")
+browser.visit("YouTube")
+browser.visit("GitHub")
+
+print("Current:", browser.currentPage())
+print("Back:", browser.back())
+print("Back:", browser.back())
+print("Forward:", browser.forward())
+print("Current:", browser.currentPage())
+
+#14. CPU / Printer Task Scheduler
+from collections import deque
+
+
+class PrintTask:
+    def __init__(self, task_id, student_name, pages):
+        self.task_id = task_id
+        self.student_name = student_name
+        self.pages = pages
+
+
+printer_queue = deque()
+
+printer_queue.append(PrintTask(1, "Aman", 5))
+printer_queue.append(PrintTask(2, "Ali", 2))
+printer_queue.append(PrintTask(3, "Dana", 8))
+
+total_pages = 0
+
+print("Printing order:")
+
+while printer_queue:
+    task = printer_queue.popleft()
+
+    print(
+        "Task", task.task_id,
+        "| Student:", task.student_name,
+        "| Pages:", task.pages
+    )
+
+    total_pages += task.pages
+
+print("Total pages printed:", total_pages)
+
+#15. Undo/Redo System
+class TextEditor:
+    def __init__(self):
+        self.text = ""
+        self.undoStack = []
+        self.redoStack = []
+
+    def write(self, text):
+        self.undoStack.append(self.text)
+        self.text += text
+        self.redoStack.clear()
+
+    def undo(self):
+        if not self.undoStack:
+            print("Nothing to undo")
+            return
+
+        self.redoStack.append(self.text)
+        self.text = self.undoStack.pop()
+
+    def redo(self):
+        if not self.redoStack:
+            print("Nothing to redo")
+            return
+
+        self.undoStack.append(self.text)
+        self.text = self.redoStack.pop()
+
+    def showText(self):
+        print("Text:", self.text)
+
+
+editor = TextEditor()
+
+editor.write("Hello")
+editor.write(" World")
+editor.showText()
+
+editor.undo()
+editor.showText()
+
+editor.redo()
+editor.showText()
+
+editor.undo()
+editor.undo()
+editor.showText()
+
+editor.redo()
+editor.showText()
+
