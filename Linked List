@@ -1,0 +1,483 @@
+#Task 1. Create a Linked List
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(10)
+head.next = Node(20)
+head.next.next = Node(30)
+head.next.next.next = Node(40)
+head.next.next.next.next = Node(50)
+
+current = head
+
+while current is not None:
+    print(current.data, end=" -> ")
+    current = current.next
+
+print("NULL")
+
+
+#Task 2. Insert at the Beginning
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insertAtBeginning(self, value):
+        new_node = Node(value)
+        new_node.next = self.head
+        self.head = new_node
+
+    def printList(self):
+        current = self.head
+        while current is not None:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("NULL")
+
+
+linked_list = LinkedList()
+linked_list.head = Node(20)
+linked_list.head.next = Node(30)
+linked_list.head.next.next = Node(40)
+
+linked_list.insertAtBeginning(10)
+linked_list.printList()
+
+
+#Task 3. Insert at the End
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def insertAtEnd(self, value):
+        new_node = Node(value)
+
+        if self.head is None:
+            self.head = new_node
+            return
+
+        current = self.head
+
+        while current.next is not None:
+            current = current.next
+
+        current.next = new_node
+
+    def printList(self):
+        current = self.head
+        while current is not None:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("NULL")
+
+
+linked_list = LinkedList()
+linked_list.head = Node(10)
+linked_list.head.next = Node(20)
+linked_list.head.next.next = Node(30)
+
+linked_list.insertAtEnd(40)
+linked_list.printList()
+
+#Task 4. Find the Length
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def getLength(self):
+        count = 0
+        current = self.head
+
+        while current is not None:
+            count += 1
+            current = current.next
+
+        return count
+
+
+linked_list = LinkedList()
+linked_list.head = Node(10)
+linked_list.head.next = Node(20)
+linked_list.head.next.next = Node(30)
+linked_list.head.next.next.next = Node(40)
+
+print("Length =", linked_list.getLength())
+
+#Task 5. Search for an Element
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def search(self, value):
+        current = self.head
+
+        while current is not None:
+            if current.data == value:
+                return True
+            current = current.next
+
+        return False
+
+
+linked_list = LinkedList()
+linked_list.head = Node(10)
+linked_list.head.next = Node(25)
+linked_list.head.next.next = Node(30)
+linked_list.head.next.next.next = Node(45)
+
+if linked_list.search(30):
+    print("Found")
+else:
+    print("Not Found")
+
+if linked_list.search(50):
+    print("Found")
+else:
+    print("Not Found")
+
+#Task 6. Delete the First Node
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def deleteFirst(self):
+        if self.head is not None:
+            self.head = self.head.next
+
+    def printList(self):
+        current = self.head
+        while current is not None:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("NULL")
+
+
+linked_list = LinkedList()
+linked_list.head = Node(10)
+linked_list.head.next = Node(20)
+linked_list.head.next.next = Node(30)
+linked_list.head.next.next.next = Node(40)
+
+linked_list.deleteFirst()
+linked_list.printList()
+
+#Task 7. Delete the Last Node
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def deleteLast(self):
+        if self.head is None:
+            return
+
+        if self.head.next is None:
+            self.head = None
+            return
+
+        current = self.head
+
+        while current.next.next is not None:
+            current = current.next
+
+        current.next = None
+
+    def printList(self):
+        current = self.head
+        while current is not None:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("NULL")
+
+
+linked_list = LinkedList()
+linked_list.head = Node(10)
+linked_list.head.next = Node(20)
+linked_list.head.next.next = Node(30)
+linked_list.head.next.next.next = Node(40)
+
+linked_list.deleteLast()
+linked_list.printList()
+
+#Task 8. Delete by Value
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def deleteValue(self, value):
+        if self.head is None:
+            print("Element not found")
+            return
+
+        if self.head.data == value:
+            self.head = self.head.next
+            return
+
+        current = self.head
+
+        while current.next is not None:
+            if current.next.data == value:
+                current.next = current.next.next
+                return
+
+            current = current.next
+
+        print("Element not found")
+
+    def printList(self):
+        current = self.head
+        while current is not None:
+            print(current.data, end=" -> ")
+            current = current.next
+        print("NULL")
+
+
+linked_list = LinkedList()
+linked_list.head = Node(10)
+linked_list.head.next = Node(20)
+linked_list.head.next.next = Node(30)
+linked_list.head.next.next.next = Node(40)
+
+linked_list.deleteValue(30)
+linked_list.printList()
+
+#Task 9. Find the Maximum Element
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(15)
+head.next = Node(7)
+head.next.next = Node(32)
+head.next.next.next = Node(4)
+head.next.next.next.next = Node(18)
+
+maximum = head.data
+current = head.next
+
+while current is not None:
+    if current.data > maximum:
+        maximum = current.data
+    current = current.next
+
+print("Maximum =", maximum)
+
+#Task 10. Find the Minimum Element
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(25)
+head.next = Node(8)
+head.next.next = Node(17)
+head.next.next.next = Node(3)
+head.next.next.next.next = Node(42)
+
+minimum = head.data
+current = head.next
+
+while current is not None:
+    if current.data < minimum:
+        minimum = current.data
+    current = current.next
+
+print("Minimum =", minimum)
+
+#Task 11. Count Even Numbers
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(3)
+head.next = Node(8)
+head.next.next = Node(12)
+head.next.next.next = Node(7)
+head.next.next.next.next = Node(5)
+head.next.next.next.next.next = Node(20)
+
+count = 0
+current = head
+
+while current is not None:
+    if current.data % 2 == 0:
+        count += 1
+    current = current.next
+
+print("Even numbers =", count)
+
+#Task 12. Reverse the Linked List
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(10)
+head.next = Node(20)
+head.next.next = Node(30)
+head.next.next.next = Node(40)
+
+prev = None
+current = head
+
+while current is not None:
+    next_node = current.next
+    current.next = prev
+    prev = current
+    current = next_node
+
+head = prev
+
+current = head
+while current is not None:
+    print(current.data, end=" -> ")
+    current = current.next
+
+print("NULL")
+
+#Task 13. Find the Middle Element
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(10)
+head.next = Node(20)
+head.next.next = Node(30)
+head.next.next.next = Node(40)
+head.next.next.next.next = Node(50)
+
+slow = head
+fast = head
+
+while fast is not None and fast.next is not None:
+    slow = slow.next
+    fast = fast.next.next
+
+if slow is not None:
+    print("Middle =", slow.data)
+
+#Task 14. Remove Duplicates
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(10)
+head.next = Node(20)
+head.next.next = Node(10)
+head.next.next.next = Node(30)
+head.next.next.next.next = Node(20)
+head.next.next.next.next.next = Node(40)
+
+current = head
+
+while current is not None:
+    runner = current
+
+    while runner.next is not None:
+        if runner.next.data == current.data:
+            runner.next = runner.next.next
+        else:
+            runner = runner.next
+
+    current = current.next
+
+current = head
+
+while current is not None:
+    print(current.data, end=" -> ")
+    current = current.next
+
+print("NULL")
+
+#Task 15. Sort a Linked List
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+
+head = Node(40)
+head.next = Node(10)
+head.next.next = Node(30)
+head.next.next.next = Node(20)
+head.next.next.next.next = Node(50)
+
+swapped = True
+
+while swapped:
+    swapped = False
+    current = head
+
+    while current.next is not None:
+        if current.data > current.next.data:
+            current.data, current.next.data = (
+                current.next.data,
+                current.data
+            )
+            swapped = True
+
+        current = current.next
+
+current = head
+
+while current is not None:
+    print(current.data, end=" -> ")
+    current = current.next
+
+print("NULL")
+
+
